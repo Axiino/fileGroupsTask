@@ -28,11 +28,11 @@ public class AnalyzerTest {
                 "\"a\";\"b\";\"x\"";
 
         String answer = "Группа 1:\n" +
-                "\"a\";\"d\";\"e\"\n" +
+                "\"r\";\"b\";\"z\"\n" +
+                "\"a\";\"b\";\"x\"\n" +
                 "\"a\";\"g\";\"s\"\n" +
                 "\"e\";\"b\";\"k\"\n" +
-                "\"r\";\"b\";\"z\"\n" +
-                "\"a\";\"b\";\"x\"";
+                "\"a\";\"d\";\"e\"";
         strings = testMerge2Groups.split("\n");
         for(String line : strings){
             analyzer.addLine(line);
@@ -57,13 +57,12 @@ public class AnalyzerTest {
                 "\"\"l;";
 
         String answer = "Группа 1:\n" +
-                "\"a\";\"d\";\"e\"\n" +
-                "\"a\";\"g\";\"s\"\n" +
-                "\"e\";\"b\";\"k\"\n" +
                 "\"r\";\"b\";\"z\"\n" +
                 "\"a\";\"b\";\"x\"\n" +
-                "Группа 2:\n" +
-                "\"\";\"\";\"\"";
+                "\"a\";\"g\";\"s\"\n" +
+                "\"e\";\"b\";\"k\"\n" +
+                "\"a\";\"d\";\"e\"";
+
         strings = testWrongLine.split("\n");
         for(String line : strings){
             analyzer.addLine(line);
@@ -117,13 +116,14 @@ public class AnalyzerTest {
                 "\"a\";\"g\";\"n\"";
 
         String answer = "Группа 1:\n" +
-                "\"a\";\"d\";\"e\"\n" +
-                "\"a\";\"l\";\"x\"\n" +
-                "\"c\";\"g\";\"f\"\n" +
                 "\"c\";\"g\";\"h\"\n" +
+                "\"a\";\"g\";\"n\"\n" +
+                "\"c\";\"g\";\"f\"\n" +
                 "\"x\";\"x\";\"n\"\n" +
                 "\"x\";\"m\";\"n\"\n" +
-                "\"a\";\"g\";\"n\"";
+                "\"a\";\"l\";\"x\"\n" +
+                "\"a\";\"d\";\"e\"";
+
         strings = testMerge3Groups.split("\n");
         for(String line : strings){
             analyzer.addLine(line);
@@ -150,9 +150,9 @@ public class AnalyzerTest {
                 "\"c\";\"\";\"\"";
 
         String answer = "Группа 1:\n" +
-                "\"a\";\"d\";\"e\"\n" +
                 "\"\";\"\";\"e\"\n" +
                 "\"a\";\"d\";\"x\"\n" +
+                "\"a\";\"d\";\"e\"\n" +
                 "Группа 2:\n" +
                 "\"x\";\"x\";\"n\"\n" +
                 "\"x\";\"h\";\"\"\n" +

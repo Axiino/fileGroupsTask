@@ -28,7 +28,7 @@ public class Analyzer {
      */
     public boolean addLine(String line){
         String[] lineParts = line.split(";");
-        if(lineParts.length  != LINE_LENGTH)
+        if((lineParts.length  != LINE_LENGTH) || isEmptyLineParts(lineParts))
             return false;
 
         List<Group> groupsToMerge = new ArrayList<>();
@@ -90,6 +90,16 @@ public class Analyzer {
 
     public int getGroups(){
         return finalGroups.values().size();
+    }
+
+    /**
+     *
+     * @return true if line equals to "";"";""
+     */
+    public boolean isEmptyLineParts(String[] lineParts){
+        return lineParts[0].equals("\"\"")
+                && lineParts[1].equals("\"\"")
+                && lineParts[2].equals("\"\"");
     }
 
 

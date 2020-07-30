@@ -7,15 +7,15 @@ public class Group {
     private static int GROUP_COUNTER = 0;
     private int groupId;
 
-    public List<String> getLines() {
+    public Set<String> getLines() {
         return lines;
     }
 
-    private List<String> lines;
+    private Set<String> lines;
 
     public Group(String lineParts){
         groupId = ++GROUP_COUNTER;
-        lines = new ArrayList<>();
+        lines = new HashSet<>();
         lines.add(lineParts);
     }
 
@@ -42,5 +42,19 @@ public class Group {
     @Override
     public String toString(){
          return String.join("\n", lines);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Group group = (Group) o;
+        return groupId == group.groupId &&
+                Objects.equals(lines, group.lines);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(groupId, lines);
     }
 }

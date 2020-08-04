@@ -28,11 +28,12 @@ public class AnalyzerTest {
                 "\"a\";\"b\";\"x\"";
 
         String answer = "Группа 1:\n" +
-                "\"r\";\"b\";\"z\"\n" +
                 "\"a\";\"b\";\"x\"\n" +
+                "\"a\";\"d\";\"e\"\n" +
                 "\"a\";\"g\";\"s\"\n" +
                 "\"e\";\"b\";\"k\"\n" +
-                "\"a\";\"d\";\"e\"";
+                "\"r\";\"b\";\"z\"";
+
         strings = testMerge2Groups.split("\n");
         for(String line : strings){
             analyzer.addLine(line);
@@ -57,11 +58,11 @@ public class AnalyzerTest {
                 "\"\"l;";
 
         String answer = "Группа 1:\n" +
-                "\"r\";\"b\";\"z\"\n" +
                 "\"a\";\"b\";\"x\"\n" +
+                "\"a\";\"d\";\"e\"\n" +
                 "\"a\";\"g\";\"s\"\n" +
                 "\"e\";\"b\";\"k\"\n" +
-                "\"a\";\"d\";\"e\"";
+                "\"r\";\"b\";\"z\"";
 
         strings = testWrongLine.split("\n");
         for(String line : strings){
@@ -116,13 +117,13 @@ public class AnalyzerTest {
                 "\"a\";\"g\";\"n\"";
 
         String answer = "Группа 1:\n" +
-                "\"c\";\"g\";\"h\"\n" +
+                "\"a\";\"d\";\"e\"\n" +
                 "\"a\";\"g\";\"n\"\n" +
-                "\"c\";\"g\";\"f\"\n" +
-                "\"x\";\"x\";\"n\"\n" +
-                "\"x\";\"m\";\"n\"\n" +
                 "\"a\";\"l\";\"x\"\n" +
-                "\"a\";\"d\";\"e\"";
+                "\"c\";\"g\";\"f\"\n" +
+                "\"c\";\"g\";\"h\"\n" +
+                "\"x\";\"m\";\"n\"\n" +
+                "\"x\";\"x\";\"n\"";
 
         strings = testMerge3Groups.split("\n");
         for(String line : strings){
@@ -151,16 +152,81 @@ public class AnalyzerTest {
 
         String answer = "Группа 1:\n" +
                 "\"\";\"\";\"e\"\n" +
-                "\"a\";\"d\";\"x\"\n" +
                 "\"a\";\"d\";\"e\"\n" +
+                "\"a\";\"d\";\"x\"\n" +
                 "Группа 2:\n" +
-                "\"x\";\"x\";\"n\"\n" +
-                "\"x\";\"h\";\"\"\n" +
                 "\"\";\"h\";\"\"\n" +
+                "\"x\";\"h\";\"\"\n" +
+                "\"x\";\"x\";\"n\"\n" +
                 "Группа 3:\n" +
-                "\"c\";\"g\";\"h\"\n" +
-                "\"c\";\"\";\"\"";
+                "\"c\";\"\";\"\"\n" +
+                "\"c\";\"g\";\"h\"";
         strings = test3GroupsWithEmpty.split("\n");
+        for(String line : strings){
+            analyzer.addLine(line);
+        }
+        List<Group> myList = analyzer.sortedGroups();
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i < myList.size(); i++){
+            builder.append("Группа " + (i + 1) + ":\n" + myList.get(i));
+            if(i + 1 != myList.size())
+                builder.append("\n");
+        }
+        Assert.assertEquals(answer, builder.toString());
+    }
+
+    /*Extra for Big Csv*/
+
+    @Test
+    public void doTestBigCsvEmptyStrings(){
+        String bigCsvEmptyStrings = "\"a\";\"d\";\"e\"\n" +
+                "\"a\";\"g\";\"s\"\n" +
+                "\"e\";\"b\";\"k\"\n" +
+                "\"r\";\"b\";\"z\"\n" +
+                "\"a\";\"b\";\"x\"\n" +
+                ";;\n" +
+                "\"e\";;" ;
+
+        String answer = "Группа 1:\n" +
+                "\"a\";\"b\";\"x\"\n" +
+                "\"a\";\"d\";\"e\"\n" +
+                "\"a\";\"g\";\"s\"\n" +
+                "\"e\";\"b\";\"k\"\n" +
+                "\"e\";;\n" +
+                "\"r\";\"b\";\"z\"";
+
+        strings = bigCsvEmptyStrings.split("\n");
+        for(String line : strings){
+            analyzer.addLine(line);
+        }
+        List<Group> myList = analyzer.sortedGroups();
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i < myList.size(); i++){
+            builder.append("Группа " + (i + 1) + ":\n" + myList.get(i));
+            if(i + 1 != myList.size())
+                builder.append("\n");
+        }
+        Assert.assertEquals(answer, builder.toString());
+    }
+
+    @Test
+    public void doTestBigCsvOneGroup(){
+        String bigCsvOneGroup = "\"a\";\"b\";\"x\"\n" +
+                "\"a\";\"z\";\"r\"\n" +
+                "\"g\";\"j\";\n" +
+                ";\"j\";\"z\"\n" +
+                "\"a\";\"j\";\n" +
+                ";\"b\";";
+
+        String answer = "Группа 1:\n" +
+                "\"a\";\"b\";\"x\"\n" +
+                "\"a\";\"j\";\n" +
+                "\"a\";\"z\";\"r\"\n" +
+                "\"g\";\"j\";\n" +
+                ";\"b\";\n" +
+                ";\"j\";\"z\"";
+
+        strings = bigCsvOneGroup.split("\n");
         for(String line : strings){
             analyzer.addLine(line);
         }

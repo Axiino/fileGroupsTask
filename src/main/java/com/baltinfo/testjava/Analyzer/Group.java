@@ -15,7 +15,7 @@ public class Group {
 
     public Group(String lineParts){
         groupId = ++GROUP_COUNTER;
-        lines = new HashSet<>();
+        lines = new TreeSet<>();
         lines.add(lineParts);
     }
 

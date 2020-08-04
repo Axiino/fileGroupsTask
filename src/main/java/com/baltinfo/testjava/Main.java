@@ -17,7 +17,8 @@ public class Main {
 
         long time = System.currentTimeMillis();
 
-        URI filePath = Main.class.getClassLoader().getResource("lng.csv").toURI();
+        //changed to lng-big.csv
+        URI filePath = Main.class.getClassLoader().getResource("lng-big.csv").toURI();
         List<String> text = Files.readAllLines(Paths.get(filePath), StandardCharsets.UTF_8);
 
         int counter = 0;
@@ -39,12 +40,10 @@ public class Main {
 
         System.out.println("Groups with more than 1 element: " + countMultiGroups);
         System.out.println("All groups: " + groupsSize);
-
-        try(FileWriter writer = new FileWriter("result.txt", false)){
+        try(FileWriter writer = new FileWriter("bigCsvResults.txt", false)){
             writer.write("Групп с более чем 1 элементом: " + countMultiGroups + "\n");
-            writer.write("Всего групп: " + groupsSize + "\n");
             for (int k = 0; k < resultGroups.size(); k++) {
-                writer.write("Группа " + (k + 1) + "\n" + resultGroups.get(k) + "\n");
+                writer.write("Группа " + k + 1 + "\n" + resultGroups.get(k) + "\n");
             }
         }
         catch (IOException e){
